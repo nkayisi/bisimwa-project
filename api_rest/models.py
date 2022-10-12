@@ -21,6 +21,7 @@ class CustomUser(AbstractUser):
     equipe_secours = models.BooleanField(default=False)
     motard = models.BooleanField(default=False)
     client = models.BooleanField(default=False)
+    is_membre_equipe_secours = models.BooleanField(default=False)
 
     def __str__(self):
         return self.username
@@ -66,6 +67,13 @@ class Utilisateur(models.Model):
     numero_national = models.CharField(max_length=50)
     profession = models.CharField(max_length=50, blank=True, null=True)
 
+
+
+class MembreEquipeSecours(Utilisateur):
+    equipe_secours = models.ForeignKey(EquipeSecours, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return self.nom
 
 
 class Association(models.Model):

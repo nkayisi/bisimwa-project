@@ -12,6 +12,7 @@ route = routers.DefaultRouter()
 
 route.register('equipeSecours', EquipeSecoursViewSet, basename='equipeSecourse')
 route.register('utilisateur', UtilisateurViewSet, basename='utilisateur')
+route.register('membreEquipeSecours', MembreEquipeSecoursViewSet, 'membreEquipeSecours')
 route.register('association', AssociationViewSet, basename='association')
 route.register('parking', ParkingViewSet, basename='parking')
 route.register('motard', MotardViewSet, basename='motard')

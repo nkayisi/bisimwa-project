@@ -63,6 +63,48 @@ class UtilisateurViewSet(viewsets.ModelViewSet):
 
 
 
+class MembreEquipeSecoursViewSet(viewsets.ModelViewSet):
+    serializer_class = MembreEquipeSecoursSerializer
+
+    def get_queryset(self):
+        equipe_secours = self.request.GET.get('equipe_secours')
+        if equipe_secours is not None :
+            queryset = MembreEquipeSecours.objects.filter(equipe_secours=equipe_secours)
+        else :
+            queryset = MembreEquipeSecours.objects.all()
+            
+        return queryset
+
+
+    def create(self, request, *args, **kwargs):
+        api_data = request.data
+
+        api_data._mutable=True
+    
+        username = api_data.pop('username')
+        password = api_data.pop('password')
+
+        user = CustomUser.objects.create_user(
+            username=username[0], 
+            password=password[0]
+        )
+
+        user.is_membre_equipe_secours = True
+        user.save()
+
+        api_data['user'] = user.id
+
+
+        serializer = self.get_serializer(data=api_data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+    
+    
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+
+
 class AssociationViewSet(viewsets.ModelViewSet):
     queryset = Association.objects.all()
     serializer_class = AssociationSerializer

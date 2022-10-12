@@ -77,6 +77,18 @@ class ParkingSerializer(serializers.ModelSerializer):
         return super(ParkingSerializer, self).to_representation(instance)
 
 
+class MembreEquipeSecoursSerializer(serializers.ModelSerializer):
+
+    equipe_secours = serializers.PrimaryKeyRelatedField(queryset=EquipeSecours.objects.all(), many=False)
+
+    class Meta:
+        model = MembreEquipeSecours
+        fields = '__all__'
+
+    def to_representation(self, instance):
+        self.fields['equipe_secours'] = MembreEquipeSecoursSerializer(read_only=True)
+        return super(MembreEquipeSecoursSerializer, self).to_representation(instance)
+
 
 class MotardSerializer(UtilisateurSerializer):
 

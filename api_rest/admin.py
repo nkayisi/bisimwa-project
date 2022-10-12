@@ -14,6 +14,7 @@ UserAdmin.fieldsets += ('Custom fields set', {'fields': ('is_association', 'equi
 
 admin.site.register(CustomUser, UserAdmin)
 admin.site.register(EquipeSecours)
+admin.site.register(MembreEquipeSecours)
 admin.site.register(Utilisateur)
 admin.site.register(Association)
 admin.site.register(Parking)
