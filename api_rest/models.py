@@ -70,7 +70,7 @@ class Utilisateur(models.Model):
 
 
 class MembreEquipeSecours(Utilisateur):
-    equipe_secours = models.ForeignKey(EquipeSecours, on_delete=models.SET_NULL)
+    equipe_secours = models.ForeignKey(EquipeSecours, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.nom
