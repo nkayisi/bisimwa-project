@@ -1,10 +1,35 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.contrib.auth.models import User
+from rest_framework.response import Response
+
+
+from django.core.mail import send_mail
+from django.contrib.auth.models import (PermissionsMixin, AbstractUser, BaseUserManager)
+# from django.contrib.auth.base_user import AbstractBaseUser
+
+# from django.contrib.auth.models import (AbstractUser, PermissionsMixin,
+# BaseUserManager, Group, Permission)
+
+
+from django.conf import settings
+
+
+
+class CustomUser(AbstractUser):
+
+    is_association = models.BooleanField(default=False)
+    equipe_secours = models.BooleanField(default=False)
+    motard = models.BooleanField(default=False)
+    client = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.username
 
 
 
 
 class EquipeSecours(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, on_delete=models.CASCADE)
     nom = models.CharField(max_length=50)
     position = models.CharField(max_length=50)
     nombre_member = models.IntegerField()
@@ -28,23 +53,23 @@ class Utilisateur(models.Model):
         ('Veuf', 'Veuf')
     )
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, on_delete=models.CASCADE)
     nom = models.CharField(max_length=50)
     post_nom = models.CharField(max_length=50)
     prenom = models.CharField(max_length=50)
-    photo = models.CharField(max_length=250)
+    photo = models.CharField(max_length=250, blank=True, null=True)
     date_naissance = models.DateField()
     genre = models.CharField(max_length=10, choices=GENRE)
-    adresse = models.CharField(max_length=250)
-    telephone = models.CharField(max_length=50)
+    adresse = models.CharField(max_length=250, blank=True, null=True)
+    telephone = models.CharField(max_length=50, blank=True, null=True)
     etat_civil = models.CharField(max_length=50, choices=ETAT_CIVIL)
     numero_national = models.CharField(max_length=50)
-    profession = models.CharField(max_length=50)
+    profession = models.CharField(max_length=50, blank=True, null=True)
 
 
 
 class Association(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, on_delete=models.CASCADE)
     nom = models.CharField(max_length=50)
     president = models.CharField(max_length=50)
     vice_president = models.CharField(max_length=50)

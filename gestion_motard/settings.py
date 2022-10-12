@@ -25,7 +25,17 @@ SECRET_KEY = 'django-insecure--#e%hy9q7@bvu768)j&h1v=b#+upvt0o141426v9^+vjd4c($e
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['10.0.2.2', '127.0.0.1', 'localhost', '172.20.10.3']
+
+# CORS_ALLOW_ALL_ORIGINS: True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8080",
+]
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    "http://localhost:8080",
+]
+
+APPEND_SLASH=False
 
 
 # Application definition
@@ -40,11 +50,33 @@ INSTALLED_APPS = [
 
     'api_rest',
     'rest_framework',
+    'corsheaders',
+    'rest_framework.authtoken',
+    'dj_rest_auth'
 ]
+
+AUTH_USER_MODEL = "api_rest.CustomUser"
+
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER': 'api_rest.serializer.CustomUserSerializer',
+    # 'TOKEN_SERIALIZER': 'path.to.custom.TokenSerializer',
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
+
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -124,3 +156,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
