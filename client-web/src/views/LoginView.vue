@@ -54,13 +54,15 @@ export default {
         
         localStorage.setItem('token', token)
 
-        api.get('/currentUser?token='+token).then(res => {
+        api.get(`/currentUser/?token=${token}`).then(res => {
           let user = res.data[0]
           this.$store.commit('setLoggedUser', user)
           document.location.reload()
         })
         
-      })
+      }).catch(err => {
+            console.log(err.code)
+        })
     }
   }
 }

@@ -61,7 +61,7 @@ export default {
     },
     async mounted() {
 
-        await api.get('parking/?association='+this.$store.state.loggedUser.id).then(res => {
+        await api.get(`parking/?association=${this.$store.state.loggedUser.id}`).then(res => {
             this.$store.dispatch('setParkings', res.data)
             api.get('motard/').then(res => {
                 this.$store.dispatch('setMotards', res.data)
