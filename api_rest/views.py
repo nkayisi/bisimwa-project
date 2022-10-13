@@ -45,6 +45,9 @@ class EquipeSecoursViewSet(viewsets.ModelViewSet):
             password=password[0]
         )
 
+        user.equipe_secours = True
+        user.save()
+
         api_data['user'] = user.id
 
         serializer = self.get_serializer(data=api_data)
