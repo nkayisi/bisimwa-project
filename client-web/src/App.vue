@@ -1,13 +1,13 @@
 <template>
   <div class="bg-slate-50">
     
-    <!-- <div v-if="is_loading"> -->
+    <div v-if="is_loading">
       <router-view/>
-    <!-- </div>
+    </div>
 
     <div v-else>
       <p>Loading...</p>
-    </div> -->
+    </div>
 
   </div>
 </template>
@@ -62,6 +62,8 @@ export default {
       }).catch(err => {
         console.log(`Error : ${err.code}`)
       })
+    }else {
+      this.is_loading = true
     }
 
 

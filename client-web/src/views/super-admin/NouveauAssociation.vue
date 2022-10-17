@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="mb-10 uppercase text-ld bg-slate-300 text-white font-semibold p-2 text-center">
+        <h1 class="mb-10 uppercase text-ld bg-green-600 text-white font-semibold p-2 text-center">
             formulaire d'ajout d'une association
         </h1>
         <h1 v-if="!passwords_match" class="mb-10 text-ld bg-red-100 text-red-800 font-semibold p-2 text-center">
@@ -11,15 +11,15 @@
                 <h1 class="border-b pb-1 text-cyan-900 mb-4 text-xs font-semibold">Info compte</h1>
                 <div class="md:flex justify-between md:space-x-4 mb-6">
                     <fieldset class="mt-2">
-                        <label for="" class="uppercase block text-xs font-semibold text-slate-400">nom d'utilisateur</label>
+                        <label for="" class="uppercase block text-xs font-semibold text-black">nom d'utilisateur</label>
                         <input v-model="username" type="text" class="border rounded-md h-10 w-64" required>
                     </fieldset>
                     <fieldset class="mt-2">
-                        <label for="" class="uppercase block text-xs font-semibold text-slate-400">mot de passe</label>
+                        <label for="" class="uppercase block text-xs font-semibold text-black">mot de passe</label>
                         <input v-model="password" type="password" class="border rounded-md h-10 w-64" required>
                     </fieldset>
                     <fieldset class="mt-2">
-                        <label for="" class="uppercase block text-xs font-semibold text-slate-400 ">confirmation</label>
+                        <label for="" class="uppercase block text-xs font-semibold text-black ">confirmation</label>
                         <input v-model="confirm" @keyup="watchPassword" type="password" :class="[passwords_match ? '' : 'focus:ring-red-600 ring-1','border rounded-md h-10 w-64']" required>
                     </fieldset>
                 </div>
@@ -28,29 +28,29 @@
                 <h1 class="border-b pb-1 text-cyan-900 mb-4 text-xs font-semibold">Infos générales</h1>
                 <div class="md:flex justify-between">
                     <fieldset class="mt-2">
-                        <label for="" class="uppercase block text-xs font-semibold text-slate-400">nom association</label>
+                        <label for="" class="uppercase block text-xs font-semibold text-black">nom association</label>
                         <input v-model="nom" type="text" class="border rounded-md h-10 w-64" required>
                     </fieldset>
                     <fieldset class="mt-2">
-                        <label for="" class="uppercase block text-xs font-semibold text-slate-400">adresse</label>
+                        <label for="" class="uppercase block text-xs font-semibold text-black">adresse</label>
                         <input v-model="adresse" type="text" class="border rounded-md h-10 w-64" required>
                     </fieldset>
                     <fieldset class="mt-2">
-                        <label for="" class="uppercase block text-xs font-semibold text-slate-400">numéro impot</label>
+                        <label for="" class="uppercase block text-xs font-semibold text-black">numéro impot</label>
                         <input v-model="numero_impot" type="text" class="border rounded-md h-10 w-64" required>
                     </fieldset>
                 </div>
                 <div class="md:flex justify-between mt-6">
                     <fieldset class="mt-2">
-                        <label for="" class="uppercase block text-xs font-semibold text-slate-400">nom président</label>
+                        <label for="" class="uppercase block text-xs font-semibold text-black">nom président</label>
                         <input v-model="president" type="text" class="border rounded-md h-10 w-64" required>
                     </fieldset>
                     <fieldset class="mt-2">
-                        <label for="" class="uppercase block text-xs font-semibold text-slate-400">nom vice-président</label>
+                        <label for="" class="uppercase block text-xs font-semibold text-black">nom vice-président</label>
                         <input v-model="vice_president" type="text" class="border rounded-md h-10 w-64" required>
                     </fieldset>
                     <fieldset class="mt-2">
-                        <label for="" class="uppercase block text-xs font-semibold text-slate-400">date de création</label>
+                        <label for="" class="uppercase block text-xs font-semibold text-black">date de création</label>
                         <input v-model="date_creation" type="date" class="border rounded-md h-10 w-64" required>
                     </fieldset>
                 </div>
