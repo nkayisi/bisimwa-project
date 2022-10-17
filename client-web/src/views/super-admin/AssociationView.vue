@@ -2,7 +2,7 @@
     <div class="md:flex md:space-x-10">
 
         <div class="md:w-80">
-            <button @click="GoAjouterAssociation" type="buttom" aria-current="true" class="w-80 py-2 px-6 mb-8 text-center text-white bg-green-600 rounded-lg border-gray-200 cursor-pointer focus:outline-none dark:bg-gray-800 dark:border-gray-600">
+            <button @click="GoAjouterAssociation" type="buttom" aria-current="true" class="w-80 py-2 px-6 mb-8 text-center text-white bg-green-600 rounded-lg border-gray-200 cursor-pointer focus:outline-none">
                 Ajouter association
             </button>
             <div class="text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white" style="height: 485px;">
