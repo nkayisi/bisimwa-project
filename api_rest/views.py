@@ -11,6 +11,21 @@ from .serializer import *
 
 
 
+class CeniViewSet(viewsets.ModelViewSet):
+
+    def get_queryset(self):
+        numero_national = self.request.GET.get('numero_national')
+        if numero_national is not None :
+            queryset = Ceni.objects.filter(numero_national=numero_national)
+        else:
+            queryset = Ceni.objects.all()
+    
+        return queryset
+    
+    serializer_class = CeniSerializer
+
+
+
 
 class CurrentUserViewSet(viewsets.ModelViewSet):
 
@@ -45,6 +60,9 @@ class EquipeSecoursViewSet(viewsets.ModelViewSet):
             password=password[0]
         )
 
+        user.equipe_secours = True
+        user.save()
+
         api_data['user'] = user.id
 
         serializer = self.get_serializer(data=api_data)
@@ -58,7 +76,16 @@ class EquipeSecoursViewSet(viewsets.ModelViewSet):
 
 
 class UtilisateurViewSet(viewsets.ModelViewSet):
-    queryset = Utilisateur.objects.all()
+
+    def get_queryset(self):
+        numero_national = self.request.GET.get('numero_national')
+        if numero_national is not None :
+            queryset = Utilisateur.objects.filter(numero_national=numero_national)
+        else :
+            queryset = Utilisateur.objects.all()
+            
+        return queryset
+
     serializer_class = UtilisateurSerializer
 
 
@@ -200,8 +227,6 @@ class MotardViewSet(viewsets.ModelViewSet):
         api_data['user'] = user.id
         api_data['matricule'] = matriculeGenerator()
 
-        print("RESPONSE====>",api_data)
-
         serializer = self.get_serializer(data=api_data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
@@ -219,25 +244,40 @@ class ClientViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         api_data = request.data
 
-        api_data._mutable=True
+        # api_data._mutable=True
     
         username = api_data.pop('username')
         password = api_data.pop('password')
+        birthday = api_data['date_naissance'].split(' ')[0]
+        
 
         user = CustomUser.objects.create_user(
-            username=username[0], 
-            password=password[0]
+            username=username, 
+            password=password
         )
 
-        api_data['user'] = user.id
+        user.client = True
+        user.save()
 
-        serializer = self.get_serializer(data=api_data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
+        client = Client.objects.create(
+            adresse=api_data['adresse'],
+            date_naissance=birthday,
+            etat_civil=api_data['etat_civil'],
+            genre=api_data['genre'],
+            nom=api_data['nom'],
+            numero_national=api_data['numero_national'],
+            photo='',
+            post_nom=api_data['post_nom'],
+            prenom=api_data['prenom'],
+            profession=api_data['profession'],
+            telephone=api_data['telephone'],
+            user=user
+        )
     
+        serializer = ClientSerializer(client)
     
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        # return Response([])
 
 
 

@@ -16,7 +16,7 @@
                     <input v-model="password2" type="password" class="px-3 border rounded-md h-10 w-64" required>
                 </fieldset>
             </div>
-            <div> 
+            <div>
                 <h1 class="border-b pb-1 text-cyan-900 mb-4 text-xs font-semibold">Infos générales</h1>
                 <div class="flex justify-between">
                     <fieldset>
@@ -34,12 +34,14 @@
                 </div>
                 <div class="flex justify-between mt-6">
                     <fieldset>
-                        <label for="" class="uppercase block text-xs font-semibold text-slate-400">date de naissance</label>
+                        <label for="" class="uppercase block text-xs font-semibold text-slate-400">date de
+                            naissance</label>
                         <input v-model="date_naissance" type="date" class="px-3 border rounded-md h-10 w-64">
                     </fieldset>
                     <fieldset>
                         <label for="" class="uppercase block text-xs font-semibold text-slate-400">Etat civil</label>
-                        <select v-model="etat_civil" name="" id="" class="px-3 border rounded-md h-10 w-64 cursor-pointer" required>
+                        <select v-model="etat_civil"
+                            class="px-3 border rounded-md h-10 w-64 cursor-pointer" required>
                             <option value="">----------</option>
                             <option value="Celibataire">Celibataire</option>
                             <option value="Marié">Marié</option>
@@ -47,14 +49,16 @@
                         </select>
                     </fieldset>
                     <fieldset>
-                        <label for="" class="uppercase block text-xs font-semibold text-slate-400">Numéro national</label>
+                        <label for="" class="uppercase block text-xs font-semibold text-slate-400">Numéro
+                            national</label>
                         <input v-model="numero_national" type="text" class="px-3 border rounded-md h-10 w-64" required>
                     </fieldset>
                 </div>
                 <div class="flex justify-between mt-6">
                     <fieldset>
                         <label for="" class="uppercase block text-xs font-semibold text-slate-400">Genre</label>
-                        <select v-model="genre" name="" id="" class="px-3 border rounded-md h-10 w-64 cursor-pointer" required>
+                        <select v-model="genre" class="px-3 border rounded-md h-10 w-64 cursor-pointer"
+                            required>
                             <option value="">----------</option>
                             <option value="Femme">Femme</option>
                             <option value="Homme">Homme</option>
@@ -76,14 +80,16 @@
                     </fieldset>
                     <fieldset>
                         <label for="" class="uppercase block text-xs font-semibold text-slate-400">Parking</label>
-                        <select v-model="parking"  name="" id="" class="px-3 border rounded-md h-10 w-64 cursor-pointer" required>
+                        <select v-model="parking" class="px-3 border rounded-md h-10 w-64 cursor-pointer"
+                            required>
                             <option value="">----------</option>
-                            <option v-for="parking in parkings" :key="parking.id" :value="parking.id">{{parking.nom}}</option>
+                            <option v-for="parking in parkings" :key="parking.id" :value="parking.id">{{parking.nom}}
+                            </option>
                         </select>
                     </fieldset>
                     <fieldset>
                         <label for="" class="uppercase block text-xs font-semibold text-slate-400">Photo</label>
-                        <input type="file" class="px-3 border rounded-md h-10 w-64">
+                        <input @change="onFileChange" type="file" class="px-3 border rounded-md h-10 w-64">
                     </fieldset>
                 </div>
             </div>
@@ -102,7 +108,7 @@ import api from '@/utilitaires/api'
 
 export default {
     name: 'NouveauMotard',
-    data(){
+    data() {
         return {
             username: '',
             password1: '',
@@ -118,56 +124,76 @@ export default {
             phone: '',
             profession: '',
             parking: '',
-            photo: null
+            photo: null,
+
+            users: [],
         }
     },
     methods: {
 
-        clearFields(){
+        clearFields() {
             this.username = '',
-            this.password1 = '',
-            this.password2 = '',
-            this.nom = '',
-            this.post_nom = '',
-            this.prenom = '',
-            this.date_naissance = '',
-            this.etat_civil = '',
-            this.numero_national = '',
-            this.genre = '',
-            this.adresse = '',
-            this.phone = '',
-            this.profession = '',
-            this.parking = '',
-            this.photo = null
+                this.password1 = '',
+                this.password2 = '',
+                this.nom = '',
+                this.post_nom = '',
+                this.prenom = '',
+                this.date_naissance = '',
+                this.etat_civil = '',
+                this.numero_national = '',
+                this.genre = '',
+                this.adresse = '',
+                this.phone = '',
+                this.profession = '',
+                this.parking = '',
+                this.photo = null
         },
 
-        ajouterMotard(){
+        onFileChange(e) {
+            this.photo = e.target.files[0];
+        },
+
+        ajouterMotard() {
 
             // let parking = this.parkings.find(park => park.id===int(this.prking))
 
-            if (this.password1===this.password2) {
+            api.get(`ceni/?numero_national=${this.numero_national}`).then(res => {
+                if (res.data.length > 0) {
+                    let user = this.users.find(user => user.numero_national === this.numero_national)
+                    if (user === undefined) {
 
-                let formData = new FormData()
-                formData.append('username', this.username)
-                formData.append('password', this.password1)
-                formData.append('nom', this.nom)
-                formData.append('post_nom', this.post_nom)
-                formData.append('prenom', this.prenom)
-                formData.append('date_naissance', this.date_naissance)
-                formData.append('etat_civil', this.etat_civil)
-                formData.append('numero_national', this.numero_national)
-                formData.append('photo', this.photo)
-                formData.append('genre', this.genre)
-                formData.append('adresse', this.adresse)
-                formData.append('telephone', this.phone)
-                formData.append('profession', this.profession)
-                formData.append('parking', parseInt(this.parking))
+                        if (this.password1 === this.password2) {
 
-                api.post('motard/', formData).then(res => {
-                    this.$store.commit('setMotard', res.data)
-                    this.clearFields()
-                })
-            }
+                            let formData = new FormData()
+                            formData.append('username', this.username)
+                            formData.append('password', this.password1)
+                            formData.append('nom', this.nom)
+                            formData.append('post_nom', this.post_nom)
+                            formData.append('prenom', this.prenom)
+                            formData.append('date_naissance', this.date_naissance)
+                            formData.append('etat_civil', this.etat_civil)
+                            formData.append('numero_national', this.numero_national)
+                            formData.append('photo', this.photo)
+                            formData.append('genre', this.genre)
+                            formData.append('adresse', this.adresse)
+                            formData.append('telephone', this.phone)
+                            formData.append('profession', this.profession)
+                            formData.append('parking', parseInt(this.parking))
+
+                            api.post('motard/', formData).then(res => {
+                                this.$store.commit('setMotard', res.data)
+                                this.clearFields()
+                            })
+                        }
+
+                    } else {
+                        alert(`Ce numéro national a déjà un compte dans le système !`)
+                    }
+                } else {
+                    alert(`Ce numéro national n'existe pas dans la base des données de la ceni !`)
+                }
+            })
+
         }
 
     },
@@ -179,18 +205,23 @@ export default {
                 day = '' + d.getDate(),
                 year = d.getFullYear();
 
-            if (month.length < 2) 
+            if (month.length < 2)
                 month = '0' + month;
-            if (day.length < 2) 
+            if (day.length < 2)
                 day = '0' + day;
 
             return [year, month, day].join('-');
         },
 
         ...mapGetters([
-        'parkings',
+            'parkings',
         ])
 
+    },
+    created() {
+        api.get('/utilisateur/').then(res => {
+            this.users = res.data
+        })
     }
 }
 

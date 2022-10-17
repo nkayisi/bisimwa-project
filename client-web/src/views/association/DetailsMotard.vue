@@ -1,9 +1,10 @@
 <template>
+    <main>
     <h1 class="border-b pb-1 mb-5 text-xs text-cyan-900">Profil</h1>
     <div class="flex item-center space-x-3 mb-5 text-gray-400">
         <div class="text-center">
-            <img src="" alt="" class="h-20 w-20 mx-auto rounded-full border">
-            <h1>Username: {{motard.user.username}}</h1>
+            <img :src="motard.photo" alt="" class="h-28 w-28 mx-auto rounded-full border">
+            
         </div>
         <div class="justify-between">
             <div>
@@ -14,6 +15,9 @@
             </div>
             <div>
                 <h1 class="font-semibold">Prénom: {{motard.prenom}}</h1>
+            </div>
+            <div>
+                <h1>Username: {{motard.user.username}}</h1>
             </div>
         </div>
     </div>
@@ -34,6 +38,7 @@
 
     <h1 class="border-b pb-1 mb-2 text-xs text-cyan-900">Info association</h1>
     <div class="mb-5 text-gray-400">
+        <h1>Matricule du motard: {{motard.matricule}}</h1>
         <h1>Parking: {{motard.parking.nom}}</h1>
         <h1>Association: {{motard.parking.association.nom}}</h1>
     </div>
@@ -48,6 +53,7 @@
             <span>Supprimer</span>
         </button>
     </div>
+    </main>
 </template>
 
 

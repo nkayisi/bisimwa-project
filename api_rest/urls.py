@@ -10,6 +10,8 @@ from .views import *
 route = routers.DefaultRouter()
 
 
+
+route.register('ceni', CeniViewSet, basename='ceni')
 route.register('equipeSecours', EquipeSecoursViewSet, basename='equipeSecourse')
 route.register('utilisateur', UtilisateurViewSet, basename='utilisateur')
 route.register('membreEquipeSecours', MembreEquipeSecoursViewSet, 'membreEquipeSecours')

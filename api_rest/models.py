@@ -15,6 +15,15 @@ from django.conf import settings
 
 
 
+
+class Ceni(models.Model):
+    numero_national = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.numero_national
+
+
+
 class CustomUser(AbstractUser):
 
     is_association = models.BooleanField(default=False)
@@ -58,14 +67,19 @@ class Utilisateur(models.Model):
     nom = models.CharField(max_length=50)
     post_nom = models.CharField(max_length=50)
     prenom = models.CharField(max_length=50)
-    photo = models.CharField(max_length=250, blank=True, null=True)
+    photo = models.ImageField(upload_to='profils/', height_field=None, width_field=None, max_length=200, blank=True, null=True)
     date_naissance = models.DateField()
     genre = models.CharField(max_length=10, choices=GENRE)
     adresse = models.CharField(max_length=250, blank=True, null=True)
     telephone = models.CharField(max_length=50, blank=True, null=True)
     etat_civil = models.CharField(max_length=50, choices=ETAT_CIVIL)
-    numero_national = models.CharField(max_length=50)
+    numero_national = models.CharField(max_length=50, unique=True)
     profession = models.CharField(max_length=50, blank=True, null=True)
+
+
+    def __str__(self):
+        return self.nom
+    
 
 
 
@@ -165,4 +179,7 @@ class Intervention(models.Model):
         return self.date
     
 
+
+
+    
 

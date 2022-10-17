@@ -2,6 +2,13 @@ from rest_framework import serializers
 from .models import *
 
 
+class CeniSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Ceni
+        fields = '__all__'
+
+
 
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:

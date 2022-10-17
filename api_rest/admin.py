@@ -12,6 +12,7 @@ UserAdmin.list_display = ('username', 'is_staff',
 UserAdmin.fieldsets += ('Custom fields set', {'fields': ('is_association', 'equipe_secours', 'motard', 'client')}),
 
 
+admin.site.register(Ceni)
 admin.site.register(CustomUser, UserAdmin)
 admin.site.register(EquipeSecours)
 admin.site.register(MembreEquipeSecours)
