@@ -13,15 +13,12 @@
                 </button>
             </div>
         </div>
-        <div class="md:w-96">
-            <div id="myMap"></div>
-        </div>
     </div>
 </template>
 
 <script>
 import api from '@/utilitaires/api';
-import GoogleMapsLoader from 'google-maps'
+
 
 export default {
 
@@ -35,24 +32,9 @@ export default {
         api.get('alerte/').then(res => {
             this.alertes = res.data
         })
-    },
-    mounted: function() {
-        console.log("map: ", google.maps)
-            this.map = new google.maps.Map(document.getElementById('myMap'), {
-            center: {lat:61.180059, lng: -149.822075},
-            scrollwheel: false,
-            zoom: 4
-            })
-  }
+    }
 
 }
 
 
 </script>
-
-<style scoped>
-    #myMap {
-    height:300px;
-    width: 100%;
-   }
-</style>
