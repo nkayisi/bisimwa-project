@@ -135,13 +135,13 @@ class Course(models.Model):
 
     TYPE = (
         ('Personne', 'Personne'),
-        ('Colit', 'Colit')
+        ('Colis', 'Colis')
     )
 
     STATUT = (
+        ('En demande', 'En demande'),
         ('En cours', 'En cours'),
-        ('Effectué', 'Effectué'),
-        ('En entente', 'En entente')
+        ('Finis', 'Finis'),
     )
 
     date = models.DateField(auto_now_add=True)
@@ -149,6 +149,7 @@ class Course(models.Model):
     statut = models.CharField(max_length=20, choices=STATUT)
     motard = models.ForeignKey(Motard, on_delete=models.SET_NULL, null=True)
     client = models.ForeignKey(Client, on_delete=models.SET_NULL, null=True)
+    description = models.TextField(null=True, blank=True)
 
 
     def __str__(self):
@@ -161,6 +162,7 @@ class Alerte(models.Model):
     date = models.DateField(auto_now_add=True)
     longitude = models.CharField(max_length=50)
     latitude = models.CharField(max_length=50)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True, blank=True)
     utilisateur = models.ForeignKey(Utilisateur, on_delete=models.SET_NULL, null=True)
     
     def __str__(self):

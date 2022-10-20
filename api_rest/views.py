@@ -282,8 +282,20 @@ class ClientViewSet(viewsets.ModelViewSet):
 
 
 class CourseViewSet(viewsets.ModelViewSet):
-    queryset = Course.objects.all()
+    # queryset = Course.objects.all()
     serializer_class = CourseSerializer
+
+    def get_queryset(self):
+        user_token = self.request.GET.get('token')
+        if user_token is not None :
+            data = Token.objects.get(key=user_token)
+
+            queryset = Course.objects.filter(client=data.user.id)
+        else:
+            queryset = Course.objects.all()
+            
+        return queryset
+    
 
     def create(self, request, *args, **kwargs):
         api_data = request.data

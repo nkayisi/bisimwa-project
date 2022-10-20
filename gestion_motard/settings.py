@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure--#e%hy9q7@bvu768)j&h1v=b#+upvt0o141426v9^+vjd4c($e
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.0.2.2', '127.0.0.1', 'localhost', '172.20.10.3', '192.168.1.162']
+ALLOWED_HOSTS = ['10.0.2.2', '127.0.0.1', 'localhost', '172.20.10.3', '192.168.1.102']
 
 # CORS_ALLOW_ALL_ORIGINS: True
 CORS_ALLOWED_ORIGINS = [
@@ -50,9 +50,12 @@ INSTALLED_APPS = [
 
     'api_rest',
     'rest_framework',
-    'corsheaders',
     'rest_framework.authtoken',
-    'dj_rest_auth'
+    'corsheaders',
+    'dj_rest_auth',
+
+    # for channels
+    'channels'
 ]
 
 AUTH_USER_MODEL = "api_rest.CustomUser"
@@ -63,6 +66,9 @@ REST_AUTH_SERIALIZERS = {
 }
 
 REST_FRAMEWORK = {
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.IsAuthenticated',
+    #     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
@@ -102,7 +108,16 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'gestion_motard.wsgi.application'
+wSGI_APPLICATION = 'gestion_motard.wsgi.application'
+
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels_redis.core.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": [("ws://localhost", 6379)],
+#         },
+#     },
+# }
 
 
 # Database

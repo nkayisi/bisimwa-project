@@ -9,6 +9,9 @@ djangorestframework = "*"
 pillow = "*"
 django-cors-headers = "*"
 dj-rest-auth = "*"
+djangochannelsrestframework = "*"
+channels-redis = "*"
+channels = "*"
 
 [dev-packages]
 

@@ -11,6 +11,29 @@ import os
 
 from django.core.asgi import get_asgi_application
 
+# for channels
+from channels.auth import AuthMiddlewareStack
+from channels.routing import ProtocolTypeRouter, URLResolver
+from channels.security.websocket import AllowedHostsOriginValidator
+
+import api_rest.routing
+from django.urls import path
+
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'gestion_motard.settings')
 
-application = get_asgi_application()
+django_asgi_app = get_asgi_application()
+
+# for channels
+application = ProtocolTypeRouter({
+    "http": django_asgi_app,
+    # "websocket": URLResolver(websocket_urlpatterns),
+    # "websocket": AllowedHostsOriginValidator(
+    #         AuthMiddlewareStack(URLRouter([api_rest.routing.websocket_urlpatterns]))
+    #     ),
+    "websocket": AuthMiddlewareStack(
+        URLRouter([
+            path("ws/", api_rest.routing.websocket_urlpatterns, name="ws"),
+        ])
+    ),
+})
