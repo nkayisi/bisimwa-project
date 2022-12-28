@@ -147,8 +147,8 @@ class Course(models.Model):
     date = models.DateField(auto_now_add=True)
     type = models.CharField(max_length=20, choices=TYPE)
     statut = models.CharField(max_length=20, choices=STATUT)
-    motard = models.ForeignKey(Motard, on_delete=models.SET_NULL, null=True)
-    client = models.ForeignKey(Client, on_delete=models.SET_NULL, null=True)
+    motard = models.ForeignKey(Motard, on_delete=models.SET_NULL, null=True, blank=True)
+    client = models.ForeignKey(Client, on_delete=models.SET_NULL, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
 
 

@@ -28,6 +28,8 @@ class CeniViewSet(viewsets.ModelViewSet):
 
 
 class CurrentUserViewSet(viewsets.ModelViewSet):
+        
+    serializer_class = CustomUserSerializer
 
     def get_queryset(self):
         user_token = self.request.GET.get('token')
@@ -37,8 +39,7 @@ class CurrentUserViewSet(viewsets.ModelViewSet):
             queryset = CustomUser.objects.filter(pk=data.user.id)
             
         return queryset
-    
-    serializer_class = CustomUserSerializer
+
 
 
 

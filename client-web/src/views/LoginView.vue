@@ -72,6 +72,8 @@ export default {
       api.login({ username: this.username, password: this.password }).then(res => {
         let token = res.data.key
 
+        console.log(res)
+
         localStorage.setItem('token', token)
 
         api.get(`/currentUser/?token=${token}`).then(res => {
